@@ -15,10 +15,28 @@ class Admin:
 
             if len(rows) != 0:
                 print("Welcome " + username)
+                return True
             else: 
                 print("Username or password is incorrect")
+                return False
         except:
             print("Error has occurred. Try again.")
+            return False
+    
+    @staticmethod
+    def signInMenu():
+        print("/////////////////////////////////////////")
+        print("How can we help you?")
+        while(True): 
+            print("1. Login \n2. Back\n")
+            adminOption = input("Enter choice: ")
+            if adminOption == "1":
+                print("\nChose login")
+                if Admin.login() is True:
+                    return True
+            elif adminOption == "2":
+                print("\nBack")
+                return False
 
     #manage room booking
 

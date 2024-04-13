@@ -20,26 +20,6 @@ def initMenu():
     print("Please choose one of the following options:")
     print("1. Member Functions \n2. Trainer Functions \n3. Admin/Staff Functions \n4. Exit\n")
 
-def signInMemberMenu():
-    print("/////////////////////////////////////////")
-    print("How can we help you?")
-    print("1. Login \n2. Register \n3. Back\n")
-
-# for trainer and admin
-def signInSecondaryMenu():
-    print("/////////////////////////////////////////")
-    print("How can we help you?")
-    print("1. Login \n2. Back\n")
-
-# use global variable to track the signed in member/trainer/admin?
-# def memberSignIn():
-
-# def trainerSignIn():
-#     print("/////////////////////////////////////////")
-
-# def adminSignIn():
-#     print("/////////////////////////////////////////")
-
 #code for user to interact with the database
 def main():
     #testing Admin class
@@ -54,43 +34,30 @@ def main():
         initMenu()
         chosenOption = input("Enter choice: ")
         if chosenOption == "1":
-            signInMemberMenu()
-            memberOption = input("Enter choice: ")
-            if memberOption == "1":
-                print("\nChose login")
-                #call sign in method then break (use another while loop for logged in user)
-                Member.login()
-            elif memberOption == "2":
-                print("\nChose register")
-                Member.registerMember()
+            if Member.signInMenu() is True:
+                break
 
         elif chosenOption == "2":
-            print("hi2")
-            signInSecondaryMenu()
-            trainerOption = input("Enter choice: ")
-            if trainerOption == "1":
-                print("\nChose login")
-                #call sign in method then break (use another while loop for logged in user)
-                Trainer.login()
-            elif trainerOption == "2":
-                print("\nBack")
-                
+            if Trainer.signInMenu() is True:
+                break
+
         elif chosenOption == "3":
-            print("hi3")
-            signInSecondaryMenu()
-            adminOption = input("Enter choice: ")
-            if adminOption == "1":
-                print("\nChose login")
-                #call sign in method then break (use another while loop for logged in user)
-                Admin.login()
-            elif adminOption == "2":
-                print("\nBack")
+            if Admin.signInMenu() is True:
+                break
+
         elif chosenOption == "4":
             break
     
     # menuOptions = 
     #loop once logged in
     while(True):
-        pass
-
+        if chosenOption == "1":
+            print("Member functions")
+            break
+        elif chosenOption == "2":
+            print("Trainer functions")
+            break
+        elif chosenOption == "3":
+            print("Admin functions")
+            break
 main()

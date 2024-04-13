@@ -19,8 +19,10 @@ class Member:
             conn.commit()
 
             print(username + " has been added to the database")
+            return True
         except:
             print("Error with adding member")
+            return False
 
     @staticmethod
     def login():
@@ -36,11 +38,31 @@ class Member:
 
             if len(rows) != 0:
                 print("Welcome " + username)
+                return True
             else: 
                 print("Username or password is incorrect")
+                return False
         except:
             print("Error has occurred. Try again.")
-        
+    
+    @staticmethod
+    def signInMenu():
+        print("/////////////////////////////////////////")
+        print("How can we help you?")
+        while(True): 
+            print("1. Login \n2. Register \n3. Back\n")
+            memberOption = input("Enter choice: ")
+            if memberOption == "1":
+                print("\nChose login")
+                if Member.login() is True:
+                    return True
+            elif memberOption == "2":
+                print("\nChose register")
+                if Member.registerMember() is True:
+                    return True
+            elif memberOption == "3":
+                print("\nBack")
+                return False
 
     def displayHealthMetric(member_id):
             try:
@@ -57,3 +79,5 @@ class Member:
                     print(f"bmi:  {member[3]}")
             except:
                 print("Error has occured")
+
+            return False

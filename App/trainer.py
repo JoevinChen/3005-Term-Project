@@ -15,10 +15,28 @@ class Trainer:
 
             if len(rows) != 0:
                 print("Welcome " + username)
+                return True
             else: 
                 print("Username or password is incorrect")
+                return False
         except:
             print("Error has occurred. Try again.")
+            return False
+    
+    @staticmethod
+    def signInMenu():
+        print("/////////////////////////////////////////")
+        print("How can we help you?")
+        while(True): 
+            print("1. Login \n2. Back\n")
+            trainerOption = input("Enter choice: ")
+            if trainerOption == "1":
+                print("\nChose login")
+                if Trainer.login() is True:
+                    return True
+            elif trainerOption == "2":
+                print("\nBack")
+                return False
 
     @staticmethod
     def memberProfileView():
