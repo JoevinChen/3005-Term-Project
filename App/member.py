@@ -110,3 +110,37 @@ class Member:
 
         except:
             print("Error has occured")
+
+    def displayPersonalInfo (member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM Members WHERE member_id = %s", (member_id))
+            rows = cur.fetchall()
+                
+            print("\nHere is your personal info: ")
+            for member in rows:
+                print(f"Email:  {member[1]}")
+                print(f"Username:  {member[2]}")
+                print(f"First Name:  {member[4]}")
+                print(f"Last Name:  {member[5]}")
+                print(f"Age:  {member[6]}")
+        except:
+            print("Error has occured")
+    
+    def modifyPersonalInfo(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            email = (input("Enter your new email: "))
+            f_name = input("Enter your new first name: ")
+            l_name = input("Enter your new last name: ")
+            age = int(input("Enter your new age: "))
+
+            cur.execute("UPDATE Members SET email = %s, f_name = %s, l_name = %s, age = %s WHERE member_id = %s", (email, f_name, l_name, age, member_id))
+            conn.commit()
+            print("User info Updated")
+
+        except:
+            print("Error has occured")
+
