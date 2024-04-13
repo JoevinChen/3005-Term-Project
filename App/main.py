@@ -1,5 +1,6 @@
 from db_connect import db
 from member import Member
+from trainer import Trainer
 from admin import Admin
 
 #test method
@@ -53,9 +54,6 @@ def memberRegistration():
     Member.registerMember(email, username, password, f_name, l_name, age)
     print(username + " has been added to the database")
 
-
-
-
 # #Inserts a new student record into the students table.
 # def addStudent(first_name, last_name, email, enrollment_date):
 #     try:
@@ -103,6 +101,7 @@ def main():
             if memberOption == "1":
                 print("\nChose login")
                 #call sign in method then break (use another while loop for logged in user)
+                Member.login()
             elif memberOption == "2":
                 print("\nChose register")
                 memberRegistration()
@@ -110,9 +109,24 @@ def main():
         elif chosenOption == "2":
             print("hi2")
             signInSecondaryMenu()
+            trainerOption = input("Enter choice: ")
+            if trainerOption == "1":
+                print("\nChose login")
+                #call sign in method then break (use another while loop for logged in user)
+                Trainer.login()
+            elif trainerOption == "2":
+                print("\nBack")
+                
         elif chosenOption == "3":
             print("hi3")
             signInSecondaryMenu()
+            adminOption = input("Enter choice: ")
+            if adminOption == "1":
+                print("\nChose login")
+                #call sign in method then break (use another while loop for logged in user)
+                Admin.login()
+            elif adminOption == "2":
+                print("\nBack")
         elif chosenOption == "4":
             break
     

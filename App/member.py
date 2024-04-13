@@ -11,3 +11,22 @@ class Member:
             conn.commit()
         except:
             print("Error with adding member")
+
+    @staticmethod
+    def login():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+
+            username = input("Enter username: ")
+            password = input("Enter password: ")
+
+            cur.execute('SELECT * FROM Members WHERE username = %s AND password = %s', (username, password))
+            rows = cur.fetchall()
+
+            if len(rows) != 0:
+                print("Welcome " + username)
+            else: 
+                print("Username or password is incorrect")
+        except:
+            print("Error has occurred. Try again.")
