@@ -2,16 +2,30 @@ from db_connect import db
 from admin import Admin
 
 #test method
-def getTest(): 
-    try:
-        conn = db.get_conn()
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM trainer')
-        rows = cur.fetchall()
-        for row in rows:
-            print(row)
-    except:
-        print("Error fetching data")
+# def getTest(): 
+#     try:
+#         conn = db.get_conn()
+#         cur = conn.cursor()
+#         cur.execute('SELECT * FROM members')
+#         rows = cur.fetchall()
+#         for row in rows:
+#             print(row)
+#     except:
+#         print("Error fetching data")
+
+def initMenu():
+    print("/////////////////////////////////////////")
+    print("Please choose one of the following options:")
+    print("1. Member Functions \n2. Trainer Functions \n3. Admin/Staff Functions \n4. Exit\n")
+
+def memberMenu():
+    print("/////////////////////////////////////////")
+    print("How can we help you?")
+    print("1. Login \n2. Register \n3. A \n4. Back\n")
+
+# might want to work on a sign in function in the Member class
+# use global variable to track the signed in member/trainer/admin?
+# def memberSignIn():
 
 #frequently get "Error with adding member" with regular input (BUG)
 def registerMember(username, password, email, f_name, l_name, age):
@@ -74,18 +88,20 @@ def memberRegistration():
 
 #code for user to interact with the database
 def main():
-    print("===================================\nWelcome to the Dawg's Fitness Club!\n===================================\n")
-    getTest()
-
     #testing Admin class
     Admin.displayAllClasses()
     Admin.displayAllEquipment()
+    
+    print("=========================================\n   Welcome to the Dawg's Fitness Club!   \n=========================================")
+    initMenu()
+    # getTest()
 
     #add stuffs here
     while(True):
-        chosenOption = input("1. Member Functions \n2. Trainer Functions \n3. Admin/Staff Functions \n4. Exit\n")
+        chosenOption = input("Enter choice: ")
         if chosenOption == "1":
-            memberOption = input("\n1. Login \n2. Register \n3. A \n4. Back\n")
+            memberMenu()
+            memberOption = input("Enter choice: ")
             if memberOption == "1":
                 print("\nChose login")
             elif memberOption == "2":
