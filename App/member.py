@@ -75,6 +75,8 @@ class Member:
                 if values[0] is True:
                     return values
             elif memberOption == "3":
+                memberid = input("enter your id: ")
+                Member.displayFitnessGoal(memberid)
                 print("\nBack")
 
                 #if back is chosen, return false
@@ -144,3 +146,30 @@ class Member:
         except:
             print("Error has occured")
 
+    def addFitnessGoal(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            weightGoal = int(input("Enter a new weight goal: "))
+            newDate = input("Enter the date you will start this goal (ie. yyyy-mm-dd): ")
+
+            cur.execute("UPDATE FitnessGoals SET weight_goal = %s, date_started = %s WHERE member_id = %s", (weightGoal, newDate, member_id))
+            conn.commit()
+            print("Goal Updated")
+
+        except:
+            print("Error has occured")
+
+    def displayFitnessGoal(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM FitnessGoals WHERE member_id = %s", (member_id))
+            rows = cur.fetchall()
+                
+            print("\nHere is your Fitness Goal: ")
+            for member in rows:
+                print(f"Target Weight:  {member[1]}")
+                print(f"Date Started This Goal:  {member[2]}")
+        except:
+            print("Error has occured")
