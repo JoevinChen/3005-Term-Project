@@ -86,10 +86,10 @@ CREATE TABLE IF NOT EXISTS Payment
 
 CREATE TABLE IF NOT EXISTS Availability
 (
-    trainer_id INT NOT NULL UNIQUE,
-    date_available DATE NOT NULL UNIQUE,
-    start_time TIME NOT NULL DEFAULT '06:00:00' UNIQUE,
-    end_time TIME NOT NULL DEFAULT '18:00:00' UNIQUE,
+    trainer_id INT NOT NULL,
+    date_available DATE NOT NULL,
+    start_time TIME NOT NULL DEFAULT '06:00:00',
+    end_time TIME NOT NULL DEFAULT '18:00:00',
     FOREIGN KEY (trainer_id) REFERENCES Trainer (trainer_id) ON DELETE CASCADE,
     PRIMARY KEY (trainer_id, date_available)
 );

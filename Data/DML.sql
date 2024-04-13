@@ -27,8 +27,7 @@ INSERT INTO Equipment (equipment_name, maintenance_status, maintenance_date) VAL
 INSERT INTO Trainer (email, username, password, f_name, l_name, age) VALUES
 ('veggiefa@outlook.com', 'veggiedawg', 'pass1', 'Justin', 'Yu', 45),
 ('nugget@gmail.com', 'nugget', 'pass2', 'Nugget', 'Nong', 20),
-('junfat@gmail.com', 'jun', 'pass3', 'Jun', 'Zhang', 21)
-RETURNING trainer_id;
+('junfat@gmail.com', 'jun', 'pass3', 'Jun', 'Zhang', 21);
 
 -- Insert sample data into the GroupTraining Table
 INSERT INTO GroupTraining (name, max_capacity, members_registered, date, start_time, end_time, room_id, trainer_id) VALUES
@@ -56,12 +55,12 @@ INSERT INTO FitnessGoals (member_id, weight_goal, date_started) VALUES
 (3, 190, '2024-03-30');
 
 -- Insert sample data into ExerciseRoutine table 
-INSERT INTO ExerciseRoutine (exercise_name, sets, weight, reps) VALUES
-('Bench Press', 3, 100, 10),
-('Squats', 3, 200, 10), 
-('Deadlifts', 3, 300, 10),
-('Leg Press', 3, 400, 10),
-('Leg Extension', 3, 100, 10);
+INSERT INTO ExerciseRoutine (member_id, exercise_name, sets, weight, reps) VALUES
+(1, 'Bench Press', 3, 100, 10),
+(1, 'Squats', 3, 200, 10), 
+(1, 'Deadlifts', 3, 300, 10),
+(1, 'Leg Press', 3, 400, 10),
+(1, 'Leg Extension', 3, 100, 10);
 
 -- Insert sample data into the Achievements Table
 INSERT INTO Achievements (member_id, achievement, date_completed) VALUES
@@ -76,7 +75,7 @@ INSERT INTO HealthMetric (member_id, user_weight, height, bmi) VALUES
 (3, 190, 174, 29);
 
 -- Insert sample data into the Availability table
-INSERT INTO Availability (tr_id, tr_trainer_date, tr_start_time, tr_end_time) VALUES
+INSERT INTO Availability (trainer_id, date_available, start_time, end_time) VALUES
 (1, '2024-03-15', '06:00:00', '12:00:00'),
 (2, '2024-03-16', '10:00:00', '18:00:00'),
 (3, '2024-03-17', '12:00:00', '18:00:00');
