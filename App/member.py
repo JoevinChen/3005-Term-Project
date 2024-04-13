@@ -2,13 +2,23 @@ from db_connect import db
 
 class Member:
     @staticmethod
-    def registerMember(username, password, email, f_name, l_name, age):
+    def registerMember():
         try:
             conn = db.get_conn()
             cursor = conn.cursor()
+
+            username = input("Enter a username: ")
+            password = input("Enter a password: ")
+            email = input("Enter a email: ")
+            f_name = input("Enter your first name: ")
+            l_name = input("Enter your last name: ")
+            age = input("Enter your age: ")
+
             #Query
             cursor.execute('INSERT INTO Members (email, username, password, f_name, l_name, age) VALUES (%s, %s, %s, %s, %s, %s)', (email, username, password, f_name, l_name, age))
             conn.commit()
+
+            print(username + " has been added to the database")
         except:
             print("Error with adding member")
 
