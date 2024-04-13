@@ -36,8 +36,14 @@ class Admin:
             query = 'SELECT * FROM equipment'
             cur.execute(query)
             equipment = cur.fetchall()
+
+            print("Here is all the equipment:")
             if equipment:
                 for i in equipment:
-                    print(i)
+                    # print(i)
+                    print(f"ID: {i[0]}")
+                    print(f"Equipment: {i[1]}\n"
+                          f"    Maintenance condition: {i[2]}\n"
+                          f"    Maintenance date: {i[3]}\n")
         except:
             print("Error fetching data")

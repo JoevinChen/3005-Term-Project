@@ -18,10 +18,10 @@ INSERT INTO Room (room_number, room_use) VALUES
 -- Insert sample data into the Equipment Table
 INSERT INTO Equipment (equipment_name, maintenance_status, maintenance_date) VALUES
 ('Leg Press', 'New', '2024-04-01'),
-('Bench Press', 'Good Condition', '2024-03-13'),
+('Bench Press', 'Good', '2024-03-13'),
 ('Cable', 'Broken', '2024-03-17'),
-('Lat Pulldown', 'Good Condition', '2024-04-15'),
-('Leg Extension', 'Good Condition', '2024-04-01');
+('Lat Pulldown', 'Good', '2024-04-15'),
+('Leg Extension', 'Good', '2024-04-01');
 
 -- Insert sample data into the Trainer table
 INSERT INTO Trainer (email, username, password, f_name, l_name, age) VALUES
