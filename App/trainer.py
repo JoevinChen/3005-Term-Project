@@ -1,4 +1,6 @@
 from db_connect import db
+from admin import Admin
+from datetime import datetime
 
 class Trainer:
     @staticmethod
@@ -62,3 +64,40 @@ class Trainer:
                 print(row)
         except:
             print("Error fetching data")
+
+    @staticmethod
+    def setTrainerAvailability(trainer_id):
+        while True:
+            try:
+                if not(Admin.trainerExist(trainer_id)):
+                    print(f"Trainer of ID {trainer_id} does not exist!")
+                    break
+       
+                date = input(f"Enter your available date (YYYY-MM-DD): ")
+                start_time = input(f"Enter your starting time (HH:MM:SS): ")
+                end_time = input(f"Enter your ending time (HH:MM:SS): ")
+
+                date = (datetime.strptime(date, "%Y-%m-%d")).date()
+                start_time = (datetime.strptime(start_time, "%H:%M:%S")).time()
+                end_time = (datetime.strptime(end_time, "%H:%M:%S")).time()
+
+                conn = db.get_conn()
+                cur = conn.cursor()
+                # query = f"UPDATE trainer SET date_available = %s start_time = %s, end_time = %s WHERE trainer_id = %s"
+                cur.execute(f"UPDATE availability SET date_available = %s, start_time = %s, end_time = %s WHERE trainer_id = %s", (date, start_time, end_time, trainer_id))
+                conn.commit()
+
+                print("Updated trainer availibilty!")
+                break
+            except Exception as e:
+                print("Invalid input! Try again.")
+
+    # @staticmethod
+    # def checkTrainerAvailability():
+    #     try:
+    #         conn = db.get_conn()
+    #         cur = conn.cursor()
+    #         if Admin.trainerExist():
+
+    #     except:
+    #         pass

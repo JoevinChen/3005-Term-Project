@@ -25,13 +25,17 @@ def initMenu():
 #code for user to interact with the database
 def main():
     #testing Admin class
-    Admin.displayAllClasses()
-    Admin.displayAllEquipment()
+    # Admin.displayAllClasses()
+    # Admin.displayAllEquipment()
     
     print("=========================================\n   Welcome to the Dawg's Fitness Club!   \n=========================================")
-    # getTest()
+    
+    #testing
+    # Admin.checkClassBookingAvailability('1', '2024-03-16', '10:00:00', '18:00:00')
+    # print(Admin.trainerExist('1'))
+    # Trainer.setTrainerAvailability('100')
 
-    #add stuffs here
+    #inital menu loop
     while(True):
         initMenu()
         chosenOption = input("Enter choice: ")

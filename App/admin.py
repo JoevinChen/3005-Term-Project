@@ -47,8 +47,6 @@ class Admin:
                 #if back is chosen, return false
                 return (False, 0)
 
-    #manage room booking
-
     #display all classes
     @staticmethod
     def displayAllClasses():
@@ -72,7 +70,6 @@ class Admin:
         except:
             print("Error fetching all classes")
 
-
     #monitor fitness equipment maintenance
     @staticmethod
     def displayAllEquipment():
@@ -93,3 +90,46 @@ class Admin:
                           f"    Maintenance date: {i[3]}\n")
         except:
             print("Error fetching data")
+
+    #checks if the group training date and time frame are available
+    @staticmethod
+    def checkClassBookingAvailability(room_id, date, start_time, end_time):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            query = '''
+                        SELECT *
+                        FROM grouptraining as g
+                        INNER JOIN room as r ON g.room_id = r.room_id 
+                        WHERE r.room_id = %s 
+                        AND g.date = %s 
+                        AND g.start_time >= %s
+                        AND g.end_time <= %s
+                    '''
+            cur.execute(query, (room_id, date, start_time, end_time))
+            result = cur.fetchone()
+            print(result)
+            if result:
+                return result[0] == 0
+        except:
+            print("Error for class availability. Try again.")
+    
+    # #create personal training class
+    # @staticmethod
+    # def createPersonalTraining():
+    #     while(True):
+    #         try:
+    #             trainer_fname = input("Enter first name: ")
+    #             trainer_lname = input("Enter last name: ")
+
+    @staticmethod
+    def trainerExist(trainer_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            query = f"SELECT * FROM trainer WHERE trainer_id = %s"
+            cur.execute(query, trainer_id)
+            result = cur.fetchone()
+            return bool(result)
+        except:
+            print("Error for trainerExist(). Try again.")
