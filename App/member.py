@@ -30,3 +30,20 @@ class Member:
                 print("Username or password is incorrect")
         except:
             print("Error has occurred. Try again.")
+        
+
+    def displayHealthMetric(member_id):
+            try:
+                conn = db.get_conn()
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM HealthMetric WHERE member_id = %s", (member_id))
+                rows = cur.fetchall()
+                
+                print("\nHere are all your current health metrics: ")
+                for member in rows:
+                    print(f"Member ID#:  {member[0]}")
+                    print(f"user weight:  {member[1]}")
+                    print(f"Height:  {member[2]}")
+                    print(f"bmi:  {member[3]}")
+            except:
+                print("Error has occured")
