@@ -3,7 +3,7 @@
   - Joevin Chen
     - Student Number: 101227689
   - Steven Lin
-    - Student Number:
+    - Student Number: 101240382
   - Danny Tran
     - Student Number:
 
