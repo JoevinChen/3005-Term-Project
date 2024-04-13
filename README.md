@@ -1,7 +1,7 @@
 # COMP3005 - Project (Option 2)
 - Members:
   - Joevin Chen
-    - Student Number: 
+    - Student Number: 101227689
   - Steven Lin
     - Student Number:
   - Danny Tran
