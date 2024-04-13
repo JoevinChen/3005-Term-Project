@@ -5,7 +5,7 @@
   - Steven Lin
     - Student Number: 101240382
   - Danny Tran
-    - Student Number:
+    - Student Number: 101225611
 
 ## Youtube Video
 ...
