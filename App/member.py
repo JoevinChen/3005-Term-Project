@@ -55,38 +55,41 @@ class Member:
     
     @staticmethod
     def signInMenu():
-        print("/////////////////////////////////////////")
-        print("How can we help you?")
-        while(True): 
-            print("1. Login \n2. Register \n3. Back\n")
-            memberOption = input("Enter choice: ")
-            if memberOption == "1":
-                print("\nChose login")
-                values = Member.login()
+        try:
+            print("/////////////////////////////////////////")
+            print("How can we help you?")
+            while(True): 
+                print("1. Login \n2. Register \n3. Back\n")
+                memberOption = input("Enter choice: ")
+                if memberOption == "1":
+                    print("\nChose login")
+                    values = Member.login()
 
-                #if login is successful, then return
-                if values[0] is True:
-                    return values
-            elif memberOption == "2":
-                print("\nChose register")
-                values = Member.registerMember()
+                    #if login is successful, then return
+                    if values[0] is True:
+                        return values
+                elif memberOption == "2":
+                    print("\nChose register")
+                    values = Member.registerMember()
 
-                #if register is successful, then return
-                if values[0] is True:
-                    return values
-            elif memberOption == "3":
-                memberid = input("enter your id: ")
-                Member.displayFitnessGoal(memberid)
-                print("\nBack")
+                    #if register is successful, then return
+                    if values[0] is True:
+                        return values
+                elif memberOption == "3":
+                    print("\nBack")
 
-                #if back is chosen, return false
-                return (False, 0)
+                    #if back is chosen, return false
+                    return (False, 0)
+        except:
+            print("Error has occurred. Try again.")
+            return (False, 0)
 
+    @staticmethod
     def displayHealthMetric(member_id):
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            cur.execute("SELECT * FROM HealthMetric WHERE member_id = %s", (member_id))
+            cur.execute("SELECT * FROM HealthMetric WHERE member_id = %s", (member_id,))
             rows = cur.fetchall()
                 
             print("\nHere are all your current health metrics: ")
@@ -98,7 +101,8 @@ class Member:
         except:
             print("Error has occured")
     
-    def modifyHealthMetric (member_id):
+    @staticmethod
+    def modifyHealthMetric(member_id):
         try:
             conn = db.get_conn()
             cur = conn.cursor()
@@ -112,12 +116,56 @@ class Member:
 
         except:
             print("Error has occured")
+    
+    def modifyPersonalInfo(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            email = (input("Enter your new email: "))
+            f_name = input("Enter your new first name: ")
+            l_name = input("Enter your new last name: ")
+            age = int(input("Enter your new age: "))
+
+            cur.execute("UPDATE Members SET email = %s, f_name = %s, l_name = %s, age = %s WHERE member_id = %s", (email, f_name, l_name, age, member_id))
+            conn.commit()
+            print("User info Updated")
+
+        except:
+            print("Error has occured")
+
+    def addFitnessGoal(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            weightGoal = int(input("Enter a new weight goal: "))
+            newDate = input("Enter the date you will start this goal (ie. yyyy-mm-dd): ")
+
+            cur.execute("UPDATE FitnessGoals SET weight_goal = %s, date_started = %s WHERE member_id = %s", (weightGoal, newDate, member_id))
+            conn.commit()
+            print("Goal Updated")
+
+        except:
+            print("Error has occured")
+
+    def displayFitnessGoal(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM FitnessGoals WHERE member_id = %s", (member_id,))
+            rows = cur.fetchall()
+                
+            print("\nHere is your Fitness Goal: ")
+            for member in rows:
+                print(f"Target Weight:  {member[1]}")
+                print(f"Date Started This Goal:  {member[2]}")
+        except:
+            print("Error has occured")
 
     def displayPersonalInfo (member_id):
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            cur.execute("SELECT * FROM Members WHERE member_id = %s", (member_id))
+            cur.execute("SELECT * FROM Members WHERE member_id = %s", (member_id,))
             rows = cur.fetchall()
                 
             print("\nHere is your personal info: ")
@@ -173,3 +221,24 @@ class Member:
                 print(f"Date Started This Goal:  {member[2]}")
         except:
             print("Error has occured")
+
+    @staticmethod
+    def dashboardDisplay(member_id):
+        conn = db.get_conn()
+        cur = conn.cursor()
+
+        Member.displayPersonalInfo(member_id)
+
+        cur.execute("SELECT * FROM ExerciseRoutine WHERE member_id = %s", (member_id,))
+        rows = cur.fetchall()
+        print("\nHere are all your current exercise routines: ")
+        for row in rows:
+            print(row)
+
+        print("\nHere are all your current achievements: ")
+        cur.execute("SELECT * FROM Achievements WHERE member_id = %s", (member_id,))
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+
+        Member.displayHealthMetric(member_id)

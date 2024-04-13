@@ -3,18 +3,6 @@ from member import Member
 from trainer import Trainer
 from admin import Admin
 
-#test method
-# def getTest(): 
-#     try:
-#         conn = db.get_conn()
-#         cur = conn.cursor()
-#         cur.execute('SELECT * FROM members')
-#         rows = cur.fetchall()
-#         for row in rows:
-#             print(row)
-#     except:
-#         print("Error fetching data")\
-
 user_id = 0
 
 def initMenu():
@@ -64,16 +52,46 @@ def main():
     #loop once logged in
     while(True):
         if chosenOption == "1":
-            print("Member functions")
-            print(user_id)
+            print("\nMember options:")
+            while(True):
+                print("\n1. Profile Management \n2. Dashboard Display \n3. Schedule Management \n4. Exit")
+                memberOption = input("Enter choice: ")
+                if memberOption == "1":
+                    break
+                elif memberOption == "2":
+                    Member.dashboardDisplay(user_id)
+                elif memberOption == "3":
+                    break
+                elif memberOption == "4":
+                    break
             break
         elif chosenOption == "2":
-            print("Trainer functions")
-            print(user_id)
+            print("\nTrainer options:")
+            while(True):
+                print("\n1. Schedule Management \n2. Member Profile Viewing \n3. Exit")
+                trainerOption = input("Enter choice: ")
+                if trainerOption == "1":
+                    break
+                elif trainerOption == "2":
+                    Trainer.memberProfileView()
+                elif trainerOption == "3":
+                    break
             break
         elif chosenOption == "3":
-            print("Admin functions")
-            print(user_id)
+            print("\nAdmin options")
+            while(True):
+                print("\n1. Room Booking Management \n2. Equipment Maintenance Monitoring\n3. Class Schedule Updating \n4. Billing and Payment Management \n5. Exit")
+                adminOption = input("Enter choice: ")
+                if adminOption == "1":
+                    break
+                elif adminOption == "2":
+                    break
+                elif adminOption == "3":
+                    break
+                elif adminOption == "4":
+                    break
+                elif adminOption == "5":
+                    break
             break
         elif chosenOption == "4":
             print("Exiting program")

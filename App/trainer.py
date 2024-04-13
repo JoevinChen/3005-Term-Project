@@ -1,4 +1,5 @@
 from db_connect import db
+from member import Member
 from admin import Admin
 from datetime import datetime
 
@@ -31,23 +32,27 @@ class Trainer:
     
     @staticmethod
     def signInMenu():
-        print("/////////////////////////////////////////")
-        print("How can we help you?")
-        while(True): 
-            print("1. Login \n2. Back\n")
-            trainerOption = input("Enter choice: ")
-            if trainerOption == "1":
-                print("\nChose login")
-                values = Trainer.login()
+        try:
+            print("/////////////////////////////////////////")
+            print("How can we help you?")
+            while(True): 
+                print("1. Login \n2. Back\n")
+                trainerOption = input("Enter choice: ")
+                if trainerOption == "1":
+                    print("\nChose login")
+                    values = Trainer.login()
 
-                #if login is successful, then return
-                if values[0] is True:
-                    return values
-            elif trainerOption == "2":
-                print("\nBack")
+                    #if login is successful, then return
+                    if values[0] is True:
+                        return values
+                elif trainerOption == "2":
+                    print("\nBack")
 
-                #if back is chosen, return false
-                return (False, 0)
+                    #if back is chosen, return false
+                    return (False, 0)
+        except:
+            print("Error has occurred. Try again.")
+            return (False, 0)
 
     @staticmethod
     def memberProfileView():
@@ -58,10 +63,9 @@ class Trainer:
             fname = input("Enter first name: ")
             lname = input("Enter last name: ")
 
-            cur.execute('SELECT * FROM members WHERE f_name = %s AND l_name = %s', (fname, lname))
+            cur.execute('SELECT member_id FROM members WHERE f_name = %s AND l_name = %s', (fname, lname))
             rows = cur.fetchall()
-            for row in rows:
-                print(row)
+            Member.dashboardDisplay(rows[0][0])
         except:
             print("Error fetching data")
 

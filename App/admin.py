@@ -29,23 +29,27 @@ class Admin:
     
     @staticmethod
     def signInMenu():
-        print("/////////////////////////////////////////")
-        print("How can we help you?")
-        while(True): 
-            print("1. Login \n2. Back\n")
-            adminOption = input("Enter choice: ")
-            if adminOption == "1":
-                print("\nChose login")
-                values = Admin.login()
+        try:
+            print("/////////////////////////////////////////")
+            print("How can we help you?")
+            while(True): 
+                print("1. Login \n2. Back\n")
+                adminOption = input("Enter choice: ")
+                if adminOption == "1":
+                    print("\nChose login")
+                    values = Admin.login()
 
-                #if login is successful, then return
-                if values[0] is True:
-                    return values
-            elif adminOption == "2":
-                print("\nBack")
+                    #if login is successful, then return
+                    if values[0] is True:
+                        return values
+                elif adminOption == "2":
+                    print("\nBack")
 
-                #if back is chosen, return false
-                return (False, 0)
+                    #if back is chosen, return false
+                    return (False, 0)
+        except:
+            print("Error has occurred. Try again.")
+            return (False, 0)
 
     #display all classes
     @staticmethod
