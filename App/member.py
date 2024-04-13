@@ -219,7 +219,7 @@ class Member:
                 print(f"Date Started This Goal:  {member[2]}")
         except:
             print("Error has occured")
-
+            
     @staticmethod
     def dashboardDisplay(member_id):
         conn = db.get_conn()
@@ -240,3 +240,67 @@ class Member:
             print(row)
 
         Member.displayHealthMetric(member_id)
+
+    def showOpenTimes():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM Availability")
+            rows = cur.fetchall()
+                
+            print("\nHere are all the available times ")
+            for member in rows:
+                print(f"Trainer's ID:  {member[0]}")
+                print(f"Date Available:  {member[1]}")
+                print(f"Start Time:  {member[2]}")
+                print(f"End Time:  {member[3]}")
+                print()
+        except:
+            print("Error has occured")
+
+    def bookSession(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            trainerID = input("Select which trainer's ID you would like to train with: ")
+            startTime = input("Enter a starting time (make sure it is between the trainer's availbility (ie. 16:00:00) )")
+            endTime = input("Enter a end time (make sure it is between the trainer's availbility (ie. 18:00:00) )")
+            date = input("Enter The Date (make sure it is on a day a trainer is available) (ie. YYYY-MM-DD)")
+
+            cur.execute(f'''SELECT trainer_id FROM Availability WHERE trainer_id = %s 
+                        AND date_available = %s 
+                        AND start_time <= %s 
+                        AND end_time >= %s''', (trainerID, date, startTime, endTime))
+            availability = cur.fetchone()
+            
+            if availability:
+                cur.execute("INSERT INTO Trains (member_id, trainer_id, booking_start_time, booking_end_time, booking_date) VALUES (%s, %s, %s, %s, %s)", (member_id, trainerID, startTime, endTime, date))
+                conn.commit()
+                print("Training session booked")
+
+                cur.execute("DELETE FROM Availability where trainer_id = %s", (trainerID))
+                conn.commit()
+                print("Trainer's availability been removed")                
+            else:
+                print("Not a valid time.")
+        
+        except:
+            print("Error has occured")
+
+    def showBookedSessions(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM Trains WHERE member_id = %s", (member_id))
+            rows = cur.fetchall()
+                
+            print("\nHere is your booked session: ")
+            for member in rows:
+                print(f"Trainer's ID:  {member[1]}")
+                print(f"Booking Start Time:  {member[2]}")
+                print(f"Booking end Time:  {member[3]}")
+                print(f"Booking Date:  {member[4]}")
+                print()
+
+        except:
+            print("Error has occured")
