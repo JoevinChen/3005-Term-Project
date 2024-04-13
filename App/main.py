@@ -22,6 +22,7 @@ def main():
     # Admin.checkClassBookingAvailability('1', '2024-03-16', '10:00:00', '18:00:00')
     # print(Admin.trainerExist('1'))
     # Trainer.setTrainerAvailability('1')
+    # Admin.updatePayment()
 
     #inital menu loop
     while(True):
@@ -71,7 +72,7 @@ def main():
                 print("\n1. Schedule Management \n2. Member Profile Viewing \n3. Exit")
                 trainerOption = input("Enter choice: ")
                 if trainerOption == "1":
-                    break
+                    Trainer.setTrainerAvailability()
                 elif trainerOption == "2":
                     Trainer.memberProfileView()
                 elif trainerOption == "3":
@@ -87,9 +88,18 @@ def main():
                 elif adminOption == "2":
                     break
                 elif adminOption == "3":
-                    break
+                    while(True):
+                        print("\n1. Display all bills \n2. Update payments \n3. Exit")
                 elif adminOption == "4":
-                    break
+                    while(True):
+                        print("\n1. Display all bills \n2. Update payments \n3. Exit")
+                        billingOption = input("Enter choice: ")
+                        if billingOption == "1":
+                            Admin.displayAllBills()
+                        elif billingOption == "2":
+                            Admin.updatePayment()
+                        elif billingOption == "3":
+                            break
                 elif adminOption == "5":
                     break
             break

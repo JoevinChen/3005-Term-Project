@@ -36,7 +36,6 @@ class Admin:
                 print("1. Login \n2. Back\n")
                 adminOption = input("Enter choice: ")
                 if adminOption == "1":
-                    print("\nChose login")
                     values = Admin.login()
 
                     #if login is successful, then return
@@ -137,3 +136,50 @@ class Admin:
             return bool(result)
         except:
             print("Error for trainerExist(). Try again.")
+    
+    @staticmethod
+    def displayAllBills():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM payment")
+            payments = cur.fetchall()
+
+            for i in payments:
+                print(f"Member ID: {i[0]}")
+                print(f"    Bill reason: {i[1]}")
+                print(f"    Billing fee: {i[2]}")
+                print(f"    Amount paid: {i[3]}")
+
+        except Exception as e:
+            print("Error for updatePayment(). Try again.")
+
+    @staticmethod
+    def updatePayment():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+
+            #validate inputted member ID
+            memberID = input("Enter member's ID to update: ")
+            cur.execute("SELECT COUNT(*) FROM members WHERE member_id = %s", memberID)
+            member = cur.fetchone()
+            # if member[0] == 0:
+            #     print("Entered member ID is invalid!")
+            # else:
+            bill_reason = input("Reason for bill: ")
+            
+            try:
+                billing_fee = int(input("Billing fee: "))
+                amount_paid = int(input("Amount paid: "))
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+            
+            cur.execute(f'''INSERT INTO payment 
+                        (member_id, bill_reason, billing_fee, amount_paid) VALUES (%s, %s, %s, %s)''', 
+                        (memberID, bill_reason, billing_fee, amount_paid))
+            conn.commit()
+            print("Updated payment!")
+                
+        except Exception as e:
+            print("Error for updatePayment(). Try again.")

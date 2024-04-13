@@ -62,14 +62,12 @@ class Member:
                 print("1. Login \n2. Register \n3. Back\n")
                 memberOption = input("Enter choice: ")
                 if memberOption == "1":
-                    print("\nChose login")
                     values = Member.login()
 
                     #if login is successful, then return
                     if values[0] is True:
                         return values
                 elif memberOption == "2":
-                    print("\nChose register")
                     values = Member.registerMember()
 
                     #if register is successful, then return

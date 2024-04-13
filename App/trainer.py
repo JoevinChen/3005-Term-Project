@@ -39,7 +39,6 @@ class Trainer:
                 print("1. Login \n2. Back\n")
                 trainerOption = input("Enter choice: ")
                 if trainerOption == "1":
-                    print("\nChose login")
                     values = Trainer.login()
 
                     #if login is successful, then return
