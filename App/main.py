@@ -1,11 +1,7 @@
-#import psycopg2
 from db_connect import db
+from admin import Admin
 
-# #Connect to database
-# connection = psycopg2.connect(database="ASS3", user="postgres", password="postgres")
-# cursor = connection.cursor()
-
-# Test method (BUG!!!)
+#test method
 def getTest(): 
     try:
         conn = db.get_conn()
@@ -17,7 +13,7 @@ def getTest():
     except:
         print("Error fetching data")
 
-
+#frequently get "Error with adding member" with regular input (BUG)
 def registerMember(username, password, email, f_name, l_name, age):
     conn = db.get_conn()
     cursor = conn.cursor()
@@ -26,7 +22,7 @@ def registerMember(username, password, email, f_name, l_name, age):
         cursor.execute('INSERT INTO Members (email, username, password, f_name, l_name, age) VALUES (%s, %s, %s, %s, %s, %s)', (email, username, password, f_name, l_name, age))
         conn.commit()
     except:
-        print("Other error with adding student")
+        print("Error with adding member")
     
 
 #Registering a member
@@ -76,20 +72,24 @@ def memberRegistration():
 #     except:
 #         print("Error deleting student")
 
-# Code for user to interact with the database
+#code for user to interact with the database
 def main():
     print("===================================\nWelcome to the Dawg's Fitness Club!\n===================================\n")
     getTest()
+
+    #testing Admin class
+    Admin.displayAllClasses()
+    Admin.displayAllEquipment()
 
     #add stuffs here
     while(True):
         chosenOption = input("1. Member Functions \n2. Trainer Functions \n3. Admin/Staff Functions \n4. Exit\n")
         if chosenOption == "1":
-            memberOption = input("1. Login \n2. Register \n3. A \n4. Back\n")
+            memberOption = input("\n1. Login \n2. Register \n3. A \n4. Back\n")
             if memberOption == "1":
-                print("Chose login")
+                print("\nChose login")
             elif memberOption == "2":
-                print("Chose register")
+                print("\nChose register")
                 memberRegistration()
 
         elif chosenOption == "2":

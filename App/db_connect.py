@@ -13,4 +13,5 @@ class DatabaseConnect:
     def get_conn(self):
         return self.conn
 
+# Change as needed
 db = DatabaseConnect('3005_Project', 'postgres', '!postgres', 'localhost', '5432')
