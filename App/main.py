@@ -40,48 +40,6 @@ def signInSecondaryMenu():
 # def adminSignIn():
 #     print("/////////////////////////////////////////")
 
-#Registering a member
-def memberRegistration():
-    #Grabs user info
-    username = input("Enter a username: ")
-    password = input("Enter a password: ")
-    email = input("Enter a email: ")
-    f_name = input("Enter your first name: ")
-    l_name = input("Enter your last name: ")
-    age = input("Enter your age: ")
-    
-    #Calls helper function
-    Member.registerMember(email, username, password, f_name, l_name, age)
-    print(username + " has been added to the database")
-
-# #Inserts a new student record into the students table.
-# def addStudent(first_name, last_name, email, enrollment_date):
-#     try:
-#         cursor.execute("INSERT INTO students (first_name, last_name, email, enrollment_date) VALUES (%s, %s, %s, %s)", (first_name, last_name, email, enrollment_date))
-#         connection.commit()
-#     except psycopg2.errors.UniqueViolation:
-#         print("Email already exists")
-#     except:
-#         print("Other error with adding student")
-
-# #Updates the email address for a student with the specified student_id.
-# def updateStudentEmail(student_id, new_email):
-#     try: 
-#         cursor.execute("UPDATE students SET email = %s WHERE student_id = %s", (new_email, student_id))
-#         connection.commit()
-#     except psycopg2.errors.UniqueViolation:
-#         print("Email already exists")
-#     except:
-#         print("Other error with updating email")
-
-# #Deletes the record of the student with the specified student_id.
-# def deleteStudent(student_id):
-#     try:
-#         cursor.execute("DELETE FROM students WHERE student_id = %s", (student_id,))
-#         connection.commit()
-#     except:
-#         print("Error deleting student")
-
 #code for user to interact with the database
 def main():
     #testing Admin class
@@ -104,7 +62,7 @@ def main():
                 Member.login()
             elif memberOption == "2":
                 print("\nChose register")
-                memberRegistration()
+                Member.registerMember()
 
         elif chosenOption == "2":
             print("hi2")
@@ -130,6 +88,9 @@ def main():
         elif chosenOption == "4":
             break
     
-    # while(True):
+    # menuOptions = 
+    #loop once logged in
+    while(True):
+        pass
 
 main()
