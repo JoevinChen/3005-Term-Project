@@ -9,14 +9,22 @@ class Admin:
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            query = 'SELECT * FROM grouptraining'
+            query = 'SELECT * FROM grouptraining JOIN room ON grouptraining.room_id = room.room_id'
             cur.execute(query)
             classes = cur.fetchall()
+
+            print("Here are all the group training classes:")
             if classes:
                 for i in classes:
-                    print(i)
+                    # print(i)
+                    print(f"ID: {i[0]}")
+                    print(f"    Group training name: {i[1]}")
+                    print(f"    Max capacity: {i[2]}")
+                    print(f"    Members registered: {i[3]}")
+                    print(f"    Room number: {i[10]}")
+                    print(f"    Date and time: {i[4]}: {i[5]} -> {i[6]}")
         except:
-            print("Error fetching data")
+            print("Error fetching all classes")
 
 
     #monitor fitness equipment maintenance
