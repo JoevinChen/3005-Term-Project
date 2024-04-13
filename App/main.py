@@ -17,7 +17,33 @@ def getTest():
     except:
         print("Error fetching data")
 
-#def memberRegistration():
+
+def registerMember(username, password, email, f_name, l_name, age):
+    conn = db.get_conn()
+    cursor = conn.cursor()
+    try:
+        #Query
+        cursor.execute('INSERT INTO Members (email, username, password, f_name, l_name, age) VALUES (%s, %s, %s, %s, %s, %s)', (email, username, password, f_name, l_name, age))
+        conn.commit()
+    except:
+        print("Other error with adding student")
+    
+
+#Registering a member
+def memberRegistration():
+    #Grabs user info
+    username = input("Enter a username: ")
+    password = input("Enter a password: ")
+    email = input("Enter a email: ")
+    f_name = input("Enter your first name: ")
+    l_name = input("Enter your last name: ")
+    age = input("Enter your age: ")
+    
+    #Calls helper function
+    registerMember(email, username, password, f_name, l_name, age)
+    print(username + " has been added to the database")
+
+    return 
 
 
 
@@ -59,7 +85,13 @@ def main():
     while(True):
         chosenOption = input("1. Member Functions \n2. Trainer Functions \n3. Admin/Staff Functions \n4. Exit\n")
         if chosenOption == "1":
-            print("hi")
+            memberOption = input("1. Login \n2. Register \n3. A \n4. Back\n")
+            if memberOption == "1":
+                print("Chose login")
+            elif memberOption == "2":
+                print("Chose register")
+                memberRegistration()
+
         elif chosenOption == "2":
             print("hi2")
         elif chosenOption == "3":
