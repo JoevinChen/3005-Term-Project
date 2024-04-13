@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS GroupTraining
     class_id SERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
     max_capacity INT NOT NULL,
-    Members_registered INT NOT NULL,
+    members_registered INT NOT NULL,
     date DATE NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
