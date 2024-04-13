@@ -1,4 +1,5 @@
 from db_connect import db
+from member import Member
 from admin import Admin
 
 #test method
@@ -18,26 +19,25 @@ def initMenu():
     print("Please choose one of the following options:")
     print("1. Member Functions \n2. Trainer Functions \n3. Admin/Staff Functions \n4. Exit\n")
 
-def memberMenu():
+def signInMemberMenu():
     print("/////////////////////////////////////////")
     print("How can we help you?")
-    print("1. Login \n2. Register \n3. A \n4. Back\n")
+    print("1. Login \n2. Register \n3. Back\n")
 
-# might want to work on a sign in function in the Member class
+# for trainer and admin
+def signInSecondaryMenu():
+    print("/////////////////////////////////////////")
+    print("How can we help you?")
+    print("1. Login \n2. Back\n")
+
 # use global variable to track the signed in member/trainer/admin?
 # def memberSignIn():
 
-#frequently get "Error with adding member" with regular input (BUG)
-def registerMember(username, password, email, f_name, l_name, age):
-    conn = db.get_conn()
-    cursor = conn.cursor()
-    try:
-        #Query
-        cursor.execute('INSERT INTO Members (email, username, password, f_name, l_name, age) VALUES (%s, %s, %s, %s, %s, %s)', (email, username, password, f_name, l_name, age))
-        conn.commit()
-    except:
-        print("Error with adding member")
-    
+# def trainerSignIn():
+#     print("/////////////////////////////////////////")
+
+# def adminSignIn():
+#     print("/////////////////////////////////////////")
 
 #Registering a member
 def memberRegistration():
@@ -50,10 +50,8 @@ def memberRegistration():
     age = input("Enter your age: ")
     
     #Calls helper function
-    registerMember(email, username, password, f_name, l_name, age)
+    Member.registerMember(email, username, password, f_name, l_name, age)
     print(username + " has been added to the database")
-
-    return 
 
 
 
@@ -93,53 +91,31 @@ def main():
     Admin.displayAllEquipment()
     
     print("=========================================\n   Welcome to the Dawg's Fitness Club!   \n=========================================")
-    initMenu()
     # getTest()
 
     #add stuffs here
     while(True):
+        initMenu()
         chosenOption = input("Enter choice: ")
         if chosenOption == "1":
-            memberMenu()
+            signInMemberMenu()
             memberOption = input("Enter choice: ")
             if memberOption == "1":
                 print("\nChose login")
+                #call sign in method then break (use another while loop for logged in user)
             elif memberOption == "2":
                 print("\nChose register")
                 memberRegistration()
 
         elif chosenOption == "2":
             print("hi2")
+            signInSecondaryMenu()
         elif chosenOption == "3":
             print("hi3")
+            signInSecondaryMenu()
         elif chosenOption == "4":
             break
-
-
-    # while(True):
-    #     chosenOption = input("1. Get all students \n2. Add a student \n3. Update a student's email \n4. Delete a student \n5. Exit\n")
-        
-    #     if chosenOption == "1":
-    #         getAllStudents()
-    #     elif chosenOption == "2":
-    #         first_name = input("Enter first name: ")
-    #         last_name = input("Enter last name: ")
-    #         email = input("Enter email: ")
-    #         enrollment_date = input("Enter enrollment date: ")
-    #         addStudent(first_name, last_name, email, enrollment_date)
-    #     elif chosenOption == "3":
-    #         student_id = input("Enter student id: ")
-    #         new_email = input("Enter new email: ")
-    #         updateStudentEmail(student_id, new_email)
-    #     elif chosenOption == "4":
-    #         student_id = input("Enter student id: ")
-    #         deleteStudent(student_id)
-    #     elif chosenOption == "5":
-    #         break
     
-    # #Closed when user exits
-    # cursor.close()
-    # connection.close()
-
+    # while(True):
 
 main()
