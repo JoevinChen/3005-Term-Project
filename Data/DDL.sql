@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXIST Members
+CREATE TABLE IF NOT EXISTS Members
 (
     member_id SERIAL PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXIST Members
     age INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXIST Trainer
+CREATE TABLE IF NOT EXISTS Trainer
 (
     trainer_id SERIAL PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXIST Trainer
     age INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXIST Admins
+CREATE TABLE IF NOT EXISTS Admins
 (
     admin_id SERIAL PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
@@ -31,14 +31,14 @@ CREATE TABLE IF NOT EXIST Admins
     age INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXIST Room
+CREATE TABLE IF NOT EXISTS Room
 (
     room_id SERIAL PRIMARY KEY,
     room_number INT NOT NULL UNIQUE,
-    room_use TEXT NOT NULL DEFAULT 'NOT IN USE',
+    room_use TEXT NOT NULL DEFAULT 'NOT IN USE'
 );
 
-CREATE TABLE IF NOT EXIST HealthMetric
+CREATE TABLE IF NOT EXISTS HealthMetric
 (
     member_id INT NOT NULL,
     user_weight INT NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXIST HealthMetric
     FOREIGN KEY (member_id) REFERENCES Members (member_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXIST FitnessGoals
+CREATE TABLE IF NOT EXISTS FitnessGoals
 (
     member_id INT NOT NULL,
     weight_goal INT NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXIST FitnessGoals
     FOREIGN KEY (member_id) REFERENCES Members (member_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXIST Achievements
+CREATE TABLE IF NOT EXISTS Achievements
 (
     member_id INT NOT NULL,
     achievement TEXT NOT NULL,
@@ -63,10 +63,11 @@ CREATE TABLE IF NOT EXIST Achievements
     FOREIGN KEY (member_id) REFERENCES Members (member_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXIST ExerciseRoutine
+CREATE TABLE IF NOT EXISTS ExerciseRoutine
 (
     exercise_id SERIAL PRIMARY KEY,
     exercise_name TEXT NOT NULL UNIQUE,
+    member_id INT NOT NULL,
     sets INT NOT NULL,
     weight INT NOT NULL,
     reps INT NOT NULL,
@@ -74,25 +75,26 @@ CREATE TABLE IF NOT EXIST ExerciseRoutine
 );
 
 
-CREATE TABLE IF NOT EXIST Payment
+CREATE TABLE IF NOT EXISTS Payment
 (
+    member_id INT NOT NULL,
     bill_reason TEXT NOT NULL,
     billing_fee FLOAT(5) NOT NULL DEFAULT 0,
     amount_paid FLOAT(5) NOT NULL DEFAULT 0,
     FOREIGN KEY (member_id) REFERENCES Members (member_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXIST Availability
+CREATE TABLE IF NOT EXISTS Availability
 (
     trainer_id INT NOT NULL UNIQUE,
     date_available DATE NOT NULL UNIQUE,
     start_time TIME NOT NULL DEFAULT '06:00:00' UNIQUE,
-    end_time TIME NOT NULL '18:00:00' UNIQUE,
+    end_time TIME NOT NULL DEFAULT '18:00:00' UNIQUE,
     FOREIGN KEY (trainer_id) REFERENCES Trainer (trainer_id) ON DELETE CASCADE,
-    PRIMARY KEY (trainer_id, date_available),
+    PRIMARY KEY (trainer_id, date_available)
 );
 
-CREATE TABLE IF NOT EXIST GroupTraining
+CREATE TABLE IF NOT EXISTS GroupTraining
 (
     class_id SERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
@@ -104,19 +106,21 @@ CREATE TABLE IF NOT EXIST GroupTraining
     room_id INT NOT NULL,
     trainer_id INT NOT NULL,
     FOREIGN KEY (trainer_id) REFERENCES Trainer (trainer_id) ON DELETE CASCADE,
-    FOREIGN KEY (room_id) REFERENCES Room (room_id) ON DELETE CASCADE,
+    FOREIGN KEY (room_id) REFERENCES Room (room_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXIST Equipment
+CREATE TABLE IF NOT EXISTS Equipment
 (
     equipment_id SERIAL PRIMARY KEY,
     equipment_name TEXT NOT NULL,
-    maintenance_status TEXT NOT NULL DEFAULT 'NOT IN NEED'
-    maintenance_date DATE NOT NULL,
+    maintenance_status TEXT NOT NULL DEFAULT 'NOT IN NEED',
+    maintenance_date DATE NOT NULL
 );
 
-CREATE TABLE IF NOT EXIST Trains
-(
+CREATE TABLE IF NOT EXISTS Trains
+(    
+    member_id INT NOT NULL,
+    trainer_id INT NOT NULL,
     booking_start_time TIME NOT NULL,
     booking_end_time TIME NOT NULL,
     booking_date DATE NOT NULL,
@@ -125,8 +129,10 @@ CREATE TABLE IF NOT EXIST Trains
     PRIMARY KEY(trainer_id, member_id)
 );
 
-CREATE TABLE IF NOT EXIST Participates
+CREATE TABLE IF NOT EXISTS Participates
 (
+    member_id INT NOT NULL,
+    class_id INT NOT NULL,
     FOREIGN KEY (class_id) REFERENCES GroupTraining (class_id) ON DELETE CASCADE,
     FOREIGN KEY (member_id) REFERENCES Members (member_id) ON DELETE CASCADE,
     PRIMARY KEY(class_id, member_id)
