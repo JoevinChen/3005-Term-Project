@@ -65,19 +65,32 @@ class Member:
                 return False
 
     def displayHealthMetric(member_id):
-            try:
-                conn = db.get_conn()
-                cur = conn.cursor()
-                cur.execute("SELECT * FROM HealthMetric WHERE member_id = %s", (member_id))
-                rows = cur.fetchall()
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM HealthMetric WHERE member_id = %s", (member_id))
+            rows = cur.fetchall()
                 
-                print("\nHere are all your current health metrics: ")
-                for member in rows:
-                    print(f"Member ID#:  {member[0]}")
-                    print(f"user weight:  {member[1]}")
-                    print(f"Height:  {member[2]}")
-                    print(f"bmi:  {member[3]}")
-            except:
-                print("Error has occured")
+            print("\nHere are all your current health metrics: ")
+            for member in rows:
+                print(f"Member ID#:  {member[0]}")
+                print(f"user weight:  {member[1]}")
+                print(f"Height:  {member[2]}")
+                print(f"bmi:  {member[3]}")
+        except:
+            print("Error has occured")
+    
+    def modifyHealthMetric (member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            user_weight = int(input("Enter your modifed or new weight (lbs): "))
+            height = int(input("Enter your modifed or new height (cm): "))
+            bmi = float(input("Enter your modifed or new bmi: "))
 
-            return False
+            cur.execute("UPDATE HealthMetric SET user_weight = %s, height = %s, bmi = %s WHERE member_id = %s", (user_weight, height, bmi, member_id))
+            conn.commit()
+            print("Updated")
+
+        except:
+            print("Error has occured")
