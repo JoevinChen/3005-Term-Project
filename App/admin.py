@@ -14,7 +14,7 @@ class Admin:
             rows = cur.fetchall()
 
             if len(rows) != 0:
-                print("Welcome " + username)
+                print("\nWelcome " + username + "\n")
 
                 cur.execute('SELECT admin_id FROM Admins WHERE username = %s', (username,))
                 user_id_tuple = cur.fetchone()
@@ -32,7 +32,9 @@ class Admin:
         try:
             print("/////////////////////////////////////////")
             print("How can we help you?")
-            while(True): 
+            while(True):
+                print("/////////////////////////////////////////")
+                print("- Admin Menu -")
                 print("1. Login \n2. Back\n")
                 adminOption = input("Enter choice: ")
                 if adminOption == "1":

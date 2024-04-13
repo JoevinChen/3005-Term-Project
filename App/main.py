@@ -53,12 +53,33 @@ def main():
     #loop once logged in
     while(True):
         if chosenOption == "1":
-            print("\nMember options:")
+            print("/////////////////////////////////////////")
+            print("Member options:")
             while(True):
-                print("\n1. Profile Management \n2. Dashboard Display \n3. Schedule Management \n4. Exit")
+                print("1. Profile Management \n2. Dashboard Display \n3. Schedule Management \n4. Exit")
                 memberOption = input("Enter choice: ")
                 if memberOption == "1":
-                    break
+                    while(True):
+                        print("/////////////////////////////////////////")
+                        print("1. Update Personal Info \n2. Fitness Goals \n3. Health Metrics \n4. Back")
+                        profileOption = input("Enter choice: ")
+                        if profileOption == "1":
+                            Member.modifyPersonalInfo(user_id)
+                        elif profileOption == "2":
+                            while(True):
+                                print("/////////////////////////////////////////")
+                                print("1. View Fitness Goal \n2. Update Fitness Goal \n3. Back")
+                                fitnessOption = input("Enter choice: ")
+                                if fitnessOption == "1":
+                                    Member.displayFitnessGoal(user_id)
+                                elif fitnessOption == "2":
+                                    Member.modifyFitnessGoal(user_id)
+                                elif fitnessOption == "3":
+                                    break
+                        elif profileOption == "3":
+                            break
+                        elif profileOption == "4":
+                            break
                 elif memberOption == "2":
                     Member.dashboardDisplay(user_id)
                 elif memberOption == "3":
@@ -67,9 +88,10 @@ def main():
                     break
             break
         elif chosenOption == "2":
-            print("\nTrainer options:")
+            print("/////////////////////////////////////////")
+            print("Trainer options:")
             while(True):
-                print("\n1. Schedule Management \n2. Member Profile Viewing \n3. Exit")
+                print("1. Schedule Management \n2. Member Profile Viewing \n3. Exit")
                 trainerOption = input("Enter choice: ")
                 if trainerOption == "1":
                     Trainer.setTrainerAvailability()
@@ -79,9 +101,11 @@ def main():
                     break
             break
         elif chosenOption == "3":
-            print("\nAdmin options")
+            print("/////////////////////////////////////////")
+            print("Admin options")
             while(True):
-                print("\n1. Room Booking Management \n2. Equipment Maintenance Monitoring\n3. Class Schedule Updating \n4. Billing and Payment Management \n5. Exit")
+                print("/////////////////////////////////////////")
+                print("1. Room Booking Management \n2. Equipment Maintenance Monitoring\n3. Class Schedule Updating \n4. Billing and Payment Management \n5. Exit")
                 adminOption = input("Enter choice: ")
                 if adminOption == "1":
                     break
@@ -101,10 +125,10 @@ def main():
                             break
                 elif adminOption == "3":
                     while(True):
-                        print("\n1. Display all bills \n2. Update payments \n3. Exit")
+                        print("\n1. \n2. \n3. Exit")
                 elif adminOption == "4":
                     while(True):
-                        print("\n1. Display all bills \n2. Update payments \n3. Exit")
+                        print("\n1. Display all bills \n2. Update payments \n3. Back")
                         billingOption = input("Enter choice: ")
                         if billingOption == "1":
                             Admin.displayAllBills()

@@ -40,7 +40,7 @@ class Member:
             rows = cur.fetchall()
 
             if len(rows) != 0:
-                print("Welcome " + username)
+                print("\nWelcome " + username + "\n")
 
                 cur.execute('SELECT member_id FROM Members WHERE username = %s', (username,))
                 user_id_tuple = cur.fetchone()
@@ -58,7 +58,9 @@ class Member:
         try:
             print("/////////////////////////////////////////")
             print("How can we help you?")
-            while(True): 
+            while(True):
+                print("/////////////////////////////////////////")
+                print("- Member Menu -")
                 print("1. Login \n2. Register \n3. Back\n")
                 memberOption = input("Enter choice: ")
                 if memberOption == "1":
@@ -99,50 +101,23 @@ class Member:
         except:
             print("Error has occured")
     
-    def modifyPersonalInfo(member_id):
+    @staticmethod
+    def modifyHealthMetric(member_id):
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            email = (input("Enter your new email: "))
-            f_name = input("Enter your new first name: ")
-            l_name = input("Enter your new last name: ")
-            age = int(input("Enter your new age: "))
+            user_weight = int(input("Enter your modifed or new weight (lbs): "))
+            height = int(input("Enter your modifed or new height (cm): "))
+            bmi = float(input("Enter your modifed or new bmi: "))
 
-            cur.execute("UPDATE Members SET email = %s, f_name = %s, l_name = %s, age = %s WHERE member_id = %s", (email, f_name, l_name, age, member_id))
+            cur.execute("UPDATE HealthMetric SET user_weight = %s, height = %s, bmi = %s WHERE member_id = %s", (user_weight, height, bmi, member_id))
             conn.commit()
-            print("User info Updated")
+            print("Updated")
 
         except:
             print("Error has occured")
 
-    def addFitnessGoal(member_id):
-        try:
-            conn = db.get_conn()
-            cur = conn.cursor()
-            weightGoal = int(input("Enter a new weight goal: "))
-            newDate = input("Enter the date you will start this goal (ie. yyyy-mm-dd): ")
-
-            cur.execute("UPDATE FitnessGoals SET weight_goal = %s, date_started = %s WHERE member_id = %s", (weightGoal, newDate, member_id))
-            conn.commit()
-            print("Goal Updated")
-
-        except:
-            print("Error has occured")
-
-    def displayFitnessGoal(member_id):
-        try:
-            conn = db.get_conn()
-            cur = conn.cursor()
-            cur.execute("SELECT * FROM FitnessGoals WHERE member_id = %s", (member_id,))
-            rows = cur.fetchall()
-                
-            print("\nHere is your Fitness Goal: ")
-            for member in rows:
-                print(f"Target Weight:  {member[1]}")
-                print(f"Date Started This Goal:  {member[2]}")
-        except:
-            print("Error has occured")
-
+    @staticmethod
     def displayPersonalInfo (member_id):
         try:
             conn = db.get_conn()
@@ -160,6 +135,7 @@ class Member:
         except:
             print("Error has occured")
     
+    @staticmethod
     def modifyPersonalInfo(member_id):
         try:
             conn = db.get_conn()
@@ -176,7 +152,8 @@ class Member:
         except:
             print("Error has occured")
 
-    def addFitnessGoal(member_id):
+    @staticmethod
+    def modifyFitnessGoal(member_id):
         try:
             conn = db.get_conn()
             cur = conn.cursor()
@@ -189,12 +166,13 @@ class Member:
 
         except:
             print("Error has occured")
-
+    
+    @staticmethod
     def displayFitnessGoal(member_id):
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            cur.execute("SELECT * FROM FitnessGoals WHERE member_id = %s", (member_id))
+            cur.execute("SELECT * FROM FitnessGoals WHERE member_id = %s", (member_id,))
             rows = cur.fetchall()
                 
             print("\nHere is your Fitness Goal: ")
@@ -225,6 +203,7 @@ class Member:
 
         Member.displayHealthMetric(member_id)
 
+    @staticmethod
     def showOpenTimes():
         try:
             conn = db.get_conn()
@@ -242,6 +221,7 @@ class Member:
         except:
             print("Error has occured")
 
+    @staticmethod
     def bookSession(member_id):
         try:
             conn = db.get_conn()
@@ -271,6 +251,7 @@ class Member:
         except:
             print("Error has occured")
 
+    @staticmethod
     def showBookedSessions(member_id):
         try:
             conn = db.get_conn()

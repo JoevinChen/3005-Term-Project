@@ -17,7 +17,7 @@ class Trainer:
             rows = cur.fetchall()
 
             if len(rows) != 0:
-                print("Welcome " + username)
+                print("\nWelcome " + username + "\n")
 
                 cur.execute('SELECT trainer_id FROM Trainer WHERE username = %s', (username,))
                 user_id_tuple = cur.fetchone()
@@ -35,7 +35,9 @@ class Trainer:
         try:
             print("/////////////////////////////////////////")
             print("How can we help you?")
-            while(True): 
+            while(True):
+                print("/////////////////////////////////////////")
+                print("- Trainer Menu -")
                 print("1. Login \n2. Back\n")
                 trainerOption = input("Enter choice: ")
                 if trainerOption == "1":
