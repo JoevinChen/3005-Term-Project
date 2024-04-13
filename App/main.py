@@ -17,6 +17,11 @@ def getTest():
     except:
         print("Error fetching data")
 
+#def memberRegistration():
+
+
+
+
 # #Inserts a new student record into the students table.
 # def addStudent(first_name, last_name, email, enrollment_date):
 #     try:
@@ -49,6 +54,20 @@ def getTest():
 def main():
     print("===================================\nWelcome to the Dawg's Fitness Club!\n===================================\n")
     getTest()
+
+    #add stuffs here
+    while(True):
+        chosenOption = input("1. Member Functions \n2. Trainer Functions \n3. Admin/Staff Functions \n4. Exit\n")
+        if chosenOption == "1":
+            print("hi")
+        elif chosenOption == "2":
+            print("hi2")
+        elif chosenOption == "3":
+            print("hi3")
+        elif chosenOption == "4":
+            break
+
+
     # while(True):
     #     chosenOption = input("1. Get all students \n2. Add a student \n3. Update a student's email \n4. Delete a student \n5. Exit\n")
         
