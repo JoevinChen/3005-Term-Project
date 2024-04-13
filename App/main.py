@@ -86,7 +86,19 @@ def main():
                 if adminOption == "1":
                     break
                 elif adminOption == "2":
-                    break
+                    while(True):
+                        print("\n1. Display all equipment \n2. Update maintenance \n3. Add Equipment \n4. Remove Equipment \n5. Exit")
+                        equipmentOption = input("Enter choice: ")
+                        if equipmentOption == "1":
+                            Admin.displayAllEquipment()
+                        elif equipmentOption == "2":
+                            Admin.updateEquipmentMaintenance()
+                        elif equipmentOption == "3":
+                            Admin.addEquipment()
+                        elif equipmentOption == "4":
+                            Admin.removeEquipment()
+                        elif equipmentOption == "5":
+                            break
                 elif adminOption == "3":
                     while(True):
                         print("\n1. Display all bills \n2. Update payments \n3. Exit")

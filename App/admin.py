@@ -94,6 +94,47 @@ class Admin:
         except:
             print("Error fetching data")
 
+    @staticmethod
+    def updateEquipmentMaintenance():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            equipment_id = input("Enter equipment ID: ")
+            maintenance_status = input("Enter maintenance condition: ")
+            maintenance_date = input("Enter maintenance date (YYYY-MM-DD): ")
+
+            cur.execute('UPDATE equipment SET maintenance_status = %s, maintenance_date = %s WHERE equipment_id = %s', (maintenance_status, maintenance_date, equipment_id))
+            conn.commit()
+            print("Updated")
+        except:
+            print("Error fetching data")
+    
+    def addEquipment():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            equipment_name = input("Enter equipment name: ")
+            maintenance_status = input("Enter maintenance condition: ")
+            maintenance_date = input("Enter maintenance date (YYYY-MM-DD): ")
+
+            cur.execute('INSERT INTO Equipment (equipment_name, maintenance_status, maintenance_date) VALUES (%s, %s, %s)', (equipment_name, maintenance_status, maintenance_date))
+            conn.commit()
+            print("Added")
+        except:
+            print("Error fetching data")
+
+    def removeEquipment():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            equipment_id = input("Enter equipment ID: ")
+
+            cur.execute('DELETE FROM Equipment WHERE equipment_id = %s', (equipment_id,))
+            conn.commit()
+            print("Removed")
+        except:
+            print("Error fetching data")
+
     #checks if the group training date and time frame are available
     @staticmethod
     def checkClassBookingAvailability(room_id, date, start_time, end_time):

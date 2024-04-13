@@ -99,22 +99,6 @@ class Member:
         except:
             print("Error has occured")
     
-    @staticmethod
-    def modifyHealthMetric(member_id):
-        try:
-            conn = db.get_conn()
-            cur = conn.cursor()
-            user_weight = int(input("Enter your modifed or new weight (lbs): "))
-            height = int(input("Enter your modifed or new height (cm): "))
-            bmi = float(input("Enter your modifed or new bmi: "))
-
-            cur.execute("UPDATE HealthMetric SET user_weight = %s, height = %s, bmi = %s WHERE member_id = %s", (user_weight, height, bmi, member_id))
-            conn.commit()
-            print("Updated")
-
-        except:
-            print("Error has occured")
-    
     def modifyPersonalInfo(member_id):
         try:
             conn = db.get_conn()
