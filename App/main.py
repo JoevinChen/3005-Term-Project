@@ -5,7 +5,7 @@ from db_connect import db
 # connection = psycopg2.connect(database="ASS3", user="postgres", password="postgres")
 # cursor = connection.cursor()
 
-#Retrieves and displays all records from the students table.
+# Test method (BUG!!!)
 def getTest(): 
     try:
         conn = db.get_conn()

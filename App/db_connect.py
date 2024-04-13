@@ -11,6 +11,6 @@ class DatabaseConnect:
             port=port
         )
     def get_conn(self):
-        return self.connection
+        return self.conn
 
 db = DatabaseConnect('3005_Project', 'postgres', '!postgres', 'localhost', '5432')
