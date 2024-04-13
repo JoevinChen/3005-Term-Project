@@ -5,7 +5,7 @@ class Member:
     def registerMember():
         try:
             conn = db.get_conn()
-            cursor = conn.cursor()
+            cur = conn.cursor()
 
             username = input("Enter a username: ")
             password = input("Enter a password: ")
@@ -15,14 +15,17 @@ class Member:
             age = input("Enter your age: ")
 
             #Query
-            cursor.execute('INSERT INTO Members (email, username, password, f_name, l_name, age) VALUES (%s, %s, %s, %s, %s, %s)', (email, username, password, f_name, l_name, age))
+            cur.execute('INSERT INTO Members (email, username, password, f_name, l_name, age) VALUES (%s, %s, %s, %s, %s, %s)', (email, username, password, f_name, l_name, age))
             conn.commit()
-
             print(username + " has been added to the database")
-            return True
+
+            cur.execute('SELECT member_id FROM Members WHERE username = %s', (username,))
+            user_id_tuple = cur.fetchone()
+            user_id = user_id_tuple[0]
+            return (True, user_id)
         except:
             print("Error with adding member")
-            return False
+            return (False, 0)
 
     @staticmethod
     def login():
@@ -38,12 +41,17 @@ class Member:
 
             if len(rows) != 0:
                 print("Welcome " + username)
-                return True
+
+                cur.execute('SELECT member_id FROM Members WHERE username = %s', (username,))
+                user_id_tuple = cur.fetchone()
+                user_id = user_id_tuple[0]
+                return (True, user_id)
             else: 
                 print("Username or password is incorrect")
-                return False
+                return (False, 0)
         except:
             print("Error has occurred. Try again.")
+            return (False, 0)
     
     @staticmethod
     def signInMenu():
@@ -54,15 +62,23 @@ class Member:
             memberOption = input("Enter choice: ")
             if memberOption == "1":
                 print("\nChose login")
-                if Member.login() is True:
-                    return True
+                values = Member.login()
+
+                #if login is successful, then return
+                if values[0] is True:
+                    return values
             elif memberOption == "2":
                 print("\nChose register")
-                if Member.registerMember() is True:
-                    return True
+                values = Member.registerMember()
+
+                #if register is successful, then return
+                if values[0] is True:
+                    return values
             elif memberOption == "3":
                 print("\nBack")
-                return False
+
+                #if back is chosen, return false
+                return (False, 0)
 
     def displayHealthMetric(member_id):
         try:

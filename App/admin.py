@@ -15,13 +15,17 @@ class Admin:
 
             if len(rows) != 0:
                 print("Welcome " + username)
-                return True
+
+                cur.execute('SELECT admin_id FROM Admins WHERE username = %s', (username,))
+                user_id_tuple = cur.fetchone()
+                user_id = user_id_tuple[0]
+                return (True, user_id)
             else: 
                 print("Username or password is incorrect")
-                return False
+                return (False, 0)
         except:
             print("Error has occurred. Try again.")
-            return False
+            return (False, 0)
     
     @staticmethod
     def signInMenu():
@@ -32,11 +36,16 @@ class Admin:
             adminOption = input("Enter choice: ")
             if adminOption == "1":
                 print("\nChose login")
-                if Admin.login() is True:
-                    return True
+                values = Admin.login()
+
+                #if login is successful, then return
+                if values[0] is True:
+                    return values
             elif adminOption == "2":
                 print("\nBack")
-                return False
+
+                #if back is chosen, return false
+                return (False, 0)
 
     #manage room booking
 

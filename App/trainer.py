@@ -15,13 +15,17 @@ class Trainer:
 
             if len(rows) != 0:
                 print("Welcome " + username)
-                return True
+
+                cur.execute('SELECT trainer_id FROM Trainer WHERE username = %s', (username,))
+                user_id_tuple = cur.fetchone()
+                user_id = user_id_tuple[0]
+                return (True, user_id)
             else: 
                 print("Username or password is incorrect")
-                return False
+                return (False, 0)
         except:
             print("Error has occurred. Try again.")
-            return False
+            return (False, 0)
     
     @staticmethod
     def signInMenu():
@@ -32,11 +36,16 @@ class Trainer:
             trainerOption = input("Enter choice: ")
             if trainerOption == "1":
                 print("\nChose login")
-                if Trainer.login() is True:
-                    return True
+                values = Trainer.login()
+
+                #if login is successful, then return
+                if values[0] is True:
+                    return values
             elif trainerOption == "2":
                 print("\nBack")
-                return False
+
+                #if back is chosen, return false
+                return (False, 0)
 
     @staticmethod
     def memberProfileView():

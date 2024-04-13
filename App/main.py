@@ -13,7 +13,9 @@ from admin import Admin
 #         for row in rows:
 #             print(row)
 #     except:
-#         print("Error fetching data")
+#         print("Error fetching data")\
+
+user_id = 0
 
 def initMenu():
     print("/////////////////////////////////////////")
@@ -34,15 +36,21 @@ def main():
         initMenu()
         chosenOption = input("Enter choice: ")
         if chosenOption == "1":
-            if Member.signInMenu() is True:
+            values = Member.signInMenu()
+            if values[0] is True:
+                user_id = values[1]
                 break
 
         elif chosenOption == "2":
-            if Trainer.signInMenu() is True:
+            values = Trainer.signInMenu()
+            if values[0] is True:
+                user_id = values[1]
                 break
 
         elif chosenOption == "3":
-            if Admin.signInMenu() is True:
+            values = Admin.signInMenu()
+            if values[0] is True:
+                user_id = values[1]
                 break
 
         elif chosenOption == "4":
@@ -53,11 +61,17 @@ def main():
     while(True):
         if chosenOption == "1":
             print("Member functions")
+            print(user_id)
             break
         elif chosenOption == "2":
             print("Trainer functions")
+            print(user_id)
             break
         elif chosenOption == "3":
             print("Admin functions")
+            print(user_id)
+            break
+        elif chosenOption == "4":
+            print("Exiting program")
             break
 main()
