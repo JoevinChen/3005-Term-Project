@@ -66,6 +66,23 @@ class Trainer:
             print("Error fetching data")
 
     @staticmethod
+    def checkTrainerTimeOverlap(date_available, start_time, end_time, trainer_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute(f'''SELECT COUNT(*) FROM availability as a WHERE 
+                        trainer_id = %s
+                        AND a.date_available = %s 
+                        AND a.start_time >= %s
+                        AND a.end_time <= %s''', (trainer_id, date_available, start_time, end_time))
+            result = cur.fetchone()
+            # print(result)
+            if result:
+                return result[0] == 0
+        except Exception as e:
+                print("Error! Try again.")
+
+    @staticmethod
     def setTrainerAvailability(trainer_id):
         while True:
             try:
@@ -81,14 +98,16 @@ class Trainer:
                 start_time = (datetime.strptime(start_time, "%H:%M:%S")).time()
                 end_time = (datetime.strptime(end_time, "%H:%M:%S")).time()
 
-                conn = db.get_conn()
-                cur = conn.cursor()
-                # query = f"UPDATE trainer SET date_available = %s start_time = %s, end_time = %s WHERE trainer_id = %s"
-                cur.execute(f"UPDATE availability SET date_available = %s, start_time = %s, end_time = %s WHERE trainer_id = %s", (date, start_time, end_time, trainer_id))
-                conn.commit()
-
-                print("Updated trainer availibilty!")
-                break
+                if not(Trainer.checkTrainerTimeOverlap(date, start_time, end_time, trainer_id)):
+                    conn = db.get_conn()
+                    cur = conn.cursor()
+                    cur.execute(f"UPDATE availability SET date_available = %s, start_time = %s, \
+                                end_time = %s WHERE trainer_id = %s", (date, start_time, end_time, trainer_id))
+                    conn.commit()
+                    print("Updated trainer availibilty!")
+                    break
+                else:
+                    print("Invalid input! Try again.")
             except Exception as e:
                 print("Invalid input! Try again.")
 

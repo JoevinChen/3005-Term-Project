@@ -33,7 +33,7 @@ def main():
     #testing
     # Admin.checkClassBookingAvailability('1', '2024-03-16', '10:00:00', '18:00:00')
     # print(Admin.trainerExist('1'))
-    # Trainer.setTrainerAvailability('100')
+    # Trainer.setTrainerAvailability('1')
 
     #inital menu loop
     while(True):

@@ -108,7 +108,7 @@ class Admin:
                     '''
             cur.execute(query, (room_id, date, start_time, end_time))
             result = cur.fetchone()
-            print(result)
+            # print(result)
             if result:
                 return result[0] == 0
         except:
