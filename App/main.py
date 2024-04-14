@@ -78,7 +78,16 @@ def main():
                                 elif fitnessOption == "3":
                                     break
                         elif profileOption == "3":
-                            break
+                            while(True):
+                                print("/////////////////////////////////////////")
+                                print("1. Add/Modify Health Metrics \n2. View Health Metrics \n3. Back")
+                                healthOption = input("Enter choice: ")
+                                if healthOption == "1":
+                                    Member.modifyHealthMetric(user_id)
+                                elif healthOption == "2":
+                                    Member.displayHealthMetric(user_id)
+                                elif healthOption == "3":
+                                    break
                         elif profileOption == "4":
                             break
                 elif memberOption == "2":
