@@ -146,7 +146,14 @@ def main():
                             break
                 elif adminOption == "3":
                     while(True):
-                        print("\n1. Display all classes\n2. Add a class to \n3. Exit")
+                        print("\n1. Display all classes\n2. Update class \n3. Exit")
+                        classOptions = input("Enter choice: ")
+                        if classOptions == "1":
+                            Admin.displayAllClasses()
+                        if classOptions == "2":
+                            break
+                        if classOptions == "3":
+                            break
                 elif adminOption == "4":
                     while(True):
                         print("\n1. Display all bills \n2. Update payments \n3. Back")
