@@ -95,7 +95,6 @@ def main():
                             Member.cancelBookedSession(user_id)
                         elif scheduleOption == "5":
                             break
-                    break
                 elif memberOption == "4":
                     break
             break
