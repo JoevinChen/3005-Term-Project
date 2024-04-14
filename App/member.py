@@ -181,7 +181,7 @@ class Member:
                 print(f"Date Started This Goal:  {member[2]}")
         except:
             print("Error has occured")
-            
+
     @staticmethod
     def dashboardDisplay(member_id):
         conn = db.get_conn()
@@ -269,3 +269,28 @@ class Member:
 
         except:
             print("Error has occured")
+
+    def cancelBookedSession(member_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            trainerID = int(input("Select which trainer's ID you would like to cancel: "))
+            cur.execute("SELECT * FROM Trains where trainer_id = %s", (trainerID,))
+            info = cur.fetchone()
+
+
+            if info:
+                startTime = info[2]
+                endTime = info[3]
+                date = info[4]
+                cur.execute("INSERT INTO Availability (trainer_id, date_available, start_time, end_time) VALUES (%s, %s, %s, %s)", (trainerID, date, startTime, endTime))
+                conn.commit()
+                print("Trainer Availability back")
+                cur.execute("DELETE FROM Trains WHERE member_id = %s AND trainer_id = %s", (member_id, trainerID))
+                conn.commit()
+                print("Session Cancelled")
+            else:
+                print("Not a valid session.")
+
+        except:
+            print("error")
