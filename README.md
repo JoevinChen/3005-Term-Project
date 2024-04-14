@@ -8,7 +8,7 @@
     - Student Number: 101225611
 
 ## Youtube Video
-...
+[...](https://youtu.be/8ZoW2OwVF6s)
 
 ## Instructions to Compile
 1. Check that Python is installed:
