@@ -1,4 +1,5 @@
 from db_connect import db
+from datetime import datetime
 
 class Admin:
     @staticmethod
@@ -51,29 +52,6 @@ class Admin:
         except:
             print("Error has occurred. Try again.")
             return (False, 0)
-
-    #display all classes
-    @staticmethod
-    def displayAllClasses():
-        try:
-            conn = db.get_conn()
-            cur = conn.cursor()
-            query = 'SELECT * FROM grouptraining JOIN room ON grouptraining.room_id = room.room_id'
-            cur.execute(query)
-            classes = cur.fetchall()
-
-            print("Here are all the group training classes:")
-            if classes:
-                for i in classes:
-                    # print(i)
-                    print(f"ID: {i[0]}")
-                    print(f"    Group training name: {i[1]}")
-                    print(f"    Max capacity: {i[2]}")
-                    print(f"    Members registered: {i[3]}")
-                    print(f"    Room number: {i[10]}")
-                    print(f"    Date and time: {i[4]}: {i[5]} -> {i[6]}")
-        except:
-            print("Error fetching all classes")
 
     #display all rooms currently booked
     def roomsBooked():
@@ -163,29 +141,94 @@ class Admin:
             print("Removed")
         except:
             print("Error fetching data")
-
-    #checks if the group training date and time frame are available
+    
+    #display all classes
     @staticmethod
-    def checkClassBookingAvailability(room_id, date, start_time, end_time):
+    def displayAllClasses():
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            query = '''
-                        SELECT *
-                        FROM grouptraining as g
-                        INNER JOIN room as r ON g.room_id = r.room_id 
-                        WHERE r.room_id = %s 
-                        AND g.date = %s 
-                        AND g.start_time >= %s
-                        AND g.end_time <= %s
-                    '''
-            cur.execute(query, (room_id, date, start_time, end_time))
-            result = cur.fetchone()
-            # print(result)
-            if result:
-                return result[0] == 0
+            query = 'SELECT * FROM grouptraining JOIN room ON grouptraining.room_id = room.room_id'
+            cur.execute(query)
+            classes = cur.fetchall()
+
+            print("Here are all the group training classes:")
+            if classes:
+                for i in classes:
+                    # print(i)
+                    print(f"ID: {i[0]}")
+                    print(f"    Group training name: {i[1]}")
+                    print(f"    Max capacity: {i[2]}")
+                    print(f"    Members registered: {i[3]}")
+                    print(f"    Room number: {i[10]}")
+                    print(f"    Date and time: {i[4]}: {i[5]} -> {i[6]}")
         except:
-            print("Error for class availability. Try again.")
+            print("Error fetching all classes")
+    
+    @staticmethod
+    def classExist(class_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT COUNT(*) FROM grouptraining WHERE class_id = %s", (class_id))
+            result = cur.fetchone()
+            return bool(result)
+        except:
+            print("Error for classExist(). Try again.")
+    
+    @staticmethod
+    def checkClassOverlap(date, start_time, end_time, room_id):
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute(f'''SELECT COUNT(*) FROM grouptraining AS g WHERE 
+                        room_id = %s 
+                        AND g.date = %s 
+                        AND g.start_time <= %s 
+                        AND g.end_time >= %s''', (room_id, date, start_time, end_time))
+            result = cur.fetchone()
+            if result:
+                return result[0] == 0  # True = no overlap, False = overlap
+        except Exception as e:
+                print("Error! Try again.")
+
+    @staticmethod
+    def updateClass():
+        while True:
+            try:
+                class_id = input("Enter the class ID to update: ")
+                if not(Admin.classExist(class_id)):
+                    print(f"Class of ID {class_id} does not exist!")
+                    break
+                
+                #gather info to update the class
+                name = input("Enter name: ")
+                max_capacity = input("Enter the max capacity: ")
+                members_registered = input("Enter # of members registered: ")
+                date = input(f"Enter the date (YYYY-MM-DD): ")
+                start_time = input(f"Enter the starting time (HH:MM:SS): ")
+                end_time = input(f"Enter the ending time (HH:MM:SS): ")
+                room_id = input(f"Enter the room ID: ")
+                trainer_id = input(f"Enter the trainer ID: ")
+
+                date = (datetime.strptime(date, "%Y-%m-%d")).date()
+                start_time = (datetime.strptime(start_time, "%H:%M:%S")).time()
+                end_time = (datetime.strptime(end_time, "%H:%M:%S")).time()
+
+                # check if same room_id start and end time overlap
+                if (Admin.checkClassOverlap(date, start_time, end_time, room_id)):
+                    conn = db.get_conn()
+                    cur = conn.cursor()
+                    cur.execute("UPDATE grouptraining SET name = %s, max_capacity = %s, members_registered = %s, \
+                                    date = %s, start_time = %s, end_time = %s, room_id = %s, \
+                                    trainer_id = %s WHERE class_id = %s", (name, max_capacity, members_registered, date, start_time, end_time, room_id, trainer_id, class_id))
+                    conn.commit()
+                    print("Updated trainer availibilty!")
+                    break
+                else:
+                    print("Invalid input! Try again.")
+            except Exception as e:
+                print("Invalid input! Try again.")
 
     @staticmethod
     def trainerExist(trainer_id):

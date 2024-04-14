@@ -75,10 +75,10 @@ class Trainer:
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            cur.execute(f'''SELECT COUNT(*) FROM availability as a WHERE 
-                        trainer_id = %s
+            cur.execute(f'''SELECT COUNT(*) FROM availability AS a WHERE 
+                        trainer_id = %s 
                         AND a.date_available = %s 
-                        AND a.start_time <= %s
+                        AND a.start_time <= %s 
                         AND a.end_time >= %s''', (trainer_id, date_available, start_time, end_time))
             result = cur.fetchone()
             if result:

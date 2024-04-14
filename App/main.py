@@ -39,7 +39,6 @@ def main():
         elif chosenOption == "4":
             break
     
-    # menuOptions = 
     #loop once logged in
     while(True):
         if chosenOption == "1":
@@ -151,7 +150,7 @@ def main():
                         if classOptions == "1":
                             Admin.displayAllClasses()
                         if classOptions == "2":
-                            break
+                            Admin.updateClass()
                         if classOptions == "3":
                             break
                 elif adminOption == "4":
