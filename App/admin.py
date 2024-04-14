@@ -265,7 +265,6 @@ class Admin:
             cur = conn.cursor()
 
             memberID = input("Enter member's ID to update: ")
-            cur.execute("SELECT COUNT(*) FROM members WHERE member_id = %s", memberID)
             bill_reason = input("Reason for bill: ")
             
             try:
