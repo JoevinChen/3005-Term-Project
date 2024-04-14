@@ -256,7 +256,7 @@ class Member:
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            cur.execute("SELECT * FROM Trains WHERE member_id = %s", (member_id))
+            cur.execute("SELECT * FROM Trains WHERE member_id = %s", (member_id,))
             rows = cur.fetchall()
                 
             print("\nHere is your booked session: ")

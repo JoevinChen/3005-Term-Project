@@ -84,6 +84,20 @@ def main():
                 elif memberOption == "2":
                     Member.dashboardDisplay(user_id)
                 elif memberOption == "3":
+                    while(True):
+                        print("/////////////////////////////////////////")
+                        print("1. View Available Sessions \n2. View Booked Sessions \n3. Book a New Session \n4. Cancel a Session \n5. Back")
+                        scheduleOption = input("Enter choice: ")
+                        if scheduleOption =="1":
+                            Member.showOpenTimes()
+                        elif scheduleOption == "2":
+                            Member.showBookedSessions(user_id)
+                        elif scheduleOption == "3":
+                            Member.bookSession(user_id)
+                        elif scheduleOption == "4":
+                            Member.cancelBookedSession(user_id)
+                        elif scheduleOption == "5":
+                            break
                     break
                 elif memberOption == "4":
                     break
