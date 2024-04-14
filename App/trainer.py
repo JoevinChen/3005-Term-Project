@@ -81,7 +81,6 @@ class Trainer:
                         AND a.start_time <= %s
                         AND a.end_time >= %s''', (trainer_id, date_available, start_time, end_time))
             result = cur.fetchone()
-            # print(result)
             if result:
                 return result[0] == 0  # True = no overlap, False = overlap
         except Exception as e:
@@ -115,13 +114,3 @@ class Trainer:
                     print("Invalid input! Try again.")
             except Exception as e:
                 print("Invalid input! Try again.")
-
-    # @staticmethod
-    # def checkTrainerAvailability():
-    #     try:
-    #         conn = db.get_conn()
-    #         cur = conn.cursor()
-    #         if Admin.trainerExist():
-
-    #     except:
-    #         pass

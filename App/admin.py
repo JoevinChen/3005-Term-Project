@@ -150,7 +150,7 @@ class Admin:
             print("Added")
         except:
             print("Error fetching data")
-
+    
     @staticmethod
     def removeEquipment():
         try:
@@ -221,13 +221,8 @@ class Admin:
             conn = db.get_conn()
             cur = conn.cursor()
 
-            #validate inputted member ID
             memberID = input("Enter member's ID to update: ")
             cur.execute("SELECT COUNT(*) FROM members WHERE member_id = %s", memberID)
-            # member = cur.fetchone()
-            # if member[0] == 0:
-            #     print("Entered member ID is invalid!")
-            # else:
             bill_reason = input("Reason for bill: ")
             
             try:

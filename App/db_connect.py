@@ -15,4 +15,4 @@ class DatabaseConnect:
         return self.conn
 
 # Change as needed
-db = DatabaseConnect('kuroko last agme', 'postgres', 'postgres', 'localhost', '5432')
+db = DatabaseConnect('3005_project', 'postgres', '!postgres', 'localhost', '5432')

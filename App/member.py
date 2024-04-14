@@ -269,7 +269,8 @@ class Member:
 
         except:
             print("Error has occured")
-
+    
+    @staticmethod
     def cancelBookedSession(member_id):
         try:
             conn = db.get_conn()

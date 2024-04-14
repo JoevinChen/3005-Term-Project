@@ -12,18 +12,7 @@ def initMenu():
 
 #code for user to interact with the database
 def main():
-    #testing Admin class
-    # Admin.displayAllClasses()
-    # Admin.displayAllEquipment()
-    
     print("=========================================\n   Welcome to the Dawg's Fitness Club!   \n=========================================")
-    
-    #testing
-    # Admin.checkClassBookingAvailability('1', '2024-03-16', '10:00:00', '18:00:00')
-    # print(Admin.trainerExist('1'))
-    # Trainer.checkTrainerTimeOverlap('2024-03-17', '11:00:00', '16:00:00', '3')  # overlaps
-    # Trainer.setTrainerAvailability('1')
-    # Admin.updatePayment()
 
     #inital menu loop
     while(True):
@@ -156,9 +145,8 @@ def main():
                         elif equipmentOption == "5":
                             break
                 elif adminOption == "3":
-                    break
-                    # while(True):
-                    #     print("\n1. \n2. \n3. Exit")
+                    while(True):
+                        print("\n1. Display all classes\n2. Add a class to \n3. Exit")
                 elif adminOption == "4":
                     while(True):
                         print("\n1. Display all bills \n2. Update payments \n3. Back")
