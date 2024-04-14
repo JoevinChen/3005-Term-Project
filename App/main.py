@@ -132,10 +132,18 @@ def main():
                 print("1. Room Booking Management \n2. Equipment Maintenance Monitoring\n3. Class Schedule Updating \n4. Billing and Payment Management \n5. Exit")
                 adminOption = input("Enter choice: ")
                 if adminOption == "1":
-                    break
+                    while(True):
+                        print("\n1. Show booked rooms \n2. Change room \n3. Back")
+                        roomOption = input("Enter choice: ")
+                        if roomOption == "1":
+                            Admin.roomsBooked()
+                        elif roomOption == "2":
+                            Admin.changeRoom()
+                        elif roomOption == "3":
+                            break
                 elif adminOption == "2":
                     while(True):
-                        print("\n1. Display all equipment \n2. Update maintenance \n3. Add Equipment \n4. Remove Equipment \n5. Exit")
+                        print("\n1. Display all equipment \n2. Update maintenance \n3. Add Equipment \n4. Remove Equipment \n5. Back")
                         equipmentOption = input("Enter choice: ")
                         if equipmentOption == "1":
                             Admin.displayAllEquipment()

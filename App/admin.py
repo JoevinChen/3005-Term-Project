@@ -75,6 +75,31 @@ class Admin:
         except:
             print("Error fetching all classes")
 
+    #display all rooms currently booked
+    def roomsBooked():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            cur.execute('SELECT * FROM grouptraining JOIN room ON grouptraining.room_id = room.room_id')
+            rooms = cur.fetchall()
+            for room in rooms:
+                print(f"Room {room[10]} is booked for {room[1]} on {room[4]} from {room[5]} to {room[6]}")
+        except:
+            print("Error fetching all rooms")
+
+    #change a room for a class
+    def changeRoom():
+        try:
+            conn = db.get_conn()
+            cur = conn.cursor()
+            class_id = input("Enter class ID: ")
+            room_id = input("Enter new room ID: ")
+            cur.execute('UPDATE GroupTraining SET room_id = %s WHERE class_id = %s', (room_id, class_id))
+            conn.commit()
+            print("Room changed")
+        except:
+            print("Error changing room")
+
     #monitor fitness equipment maintenance
     @staticmethod
     def displayAllEquipment():
@@ -111,6 +136,7 @@ class Admin:
         except:
             print("Error fetching data")
     
+    @staticmethod
     def addEquipment():
         try:
             conn = db.get_conn()
@@ -125,6 +151,7 @@ class Admin:
         except:
             print("Error fetching data")
 
+    @staticmethod
     def removeEquipment():
         try:
             conn = db.get_conn()
@@ -159,14 +186,6 @@ class Admin:
                 return result[0] == 0
         except:
             print("Error for class availability. Try again.")
-    
-    # #create personal training class
-    # @staticmethod
-    # def createPersonalTraining():
-    #     while(True):
-    #         try:
-    #             trainer_fname = input("Enter first name: ")
-    #             trainer_lname = input("Enter last name: ")
 
     @staticmethod
     def trainerExist(trainer_id):
