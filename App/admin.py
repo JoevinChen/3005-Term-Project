@@ -173,8 +173,7 @@ class Admin:
         try:
             conn = db.get_conn()
             cur = conn.cursor()
-            query = f"SELECT * FROM trainer WHERE trainer_id = %s"
-            cur.execute(query, trainer_id)
+            cur.execute("SELECT COUNT(*) FROM trainer WHERE trainer_id = %s", (trainer_id,))
             result = cur.fetchone()
             return bool(result)
         except:
@@ -206,7 +205,7 @@ class Admin:
             #validate inputted member ID
             memberID = input("Enter member's ID to update: ")
             cur.execute("SELECT COUNT(*) FROM members WHERE member_id = %s", memberID)
-            member = cur.fetchone()
+            # member = cur.fetchone()
             # if member[0] == 0:
             #     print("Entered member ID is invalid!")
             # else:

@@ -21,6 +21,7 @@ def main():
     #testing
     # Admin.checkClassBookingAvailability('1', '2024-03-16', '10:00:00', '18:00:00')
     # print(Admin.trainerExist('1'))
+    # Trainer.checkTrainerTimeOverlap('2024-03-17', '11:00:00', '16:00:00', '3')  # overlaps
     # Trainer.setTrainerAvailability('1')
     # Admin.updatePayment()
 
@@ -94,7 +95,7 @@ def main():
                 print("1. Schedule Management \n2. Member Profile Viewing \n3. Exit")
                 trainerOption = input("Enter choice: ")
                 if trainerOption == "1":
-                    Trainer.setTrainerAvailability()
+                    Trainer.setTrainerAvailability(user_id)
                 elif trainerOption == "2":
                     Trainer.memberProfileView()
                 elif trainerOption == "3":
@@ -124,8 +125,9 @@ def main():
                         elif equipmentOption == "5":
                             break
                 elif adminOption == "3":
-                    while(True):
-                        print("\n1. \n2. \n3. Exit")
+                    break
+                    # while(True):
+                    #     print("\n1. \n2. \n3. Exit")
                 elif adminOption == "4":
                     while(True):
                         print("\n1. Display all bills \n2. Update payments \n3. Back")
